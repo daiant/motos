@@ -1,0 +1,156 @@
+body, html {
+  overflow: hidden;
+  background: linear-gradient(#170031, #280039);
+}
+
+#finish_line {
+  position: fixed;
+  width: 100vw;
+  height: 96px;
+  background-color: grey;
+  top: -100%;
+  z-index: 1;
+}
+
+#road {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#road.end {
+  animation: slideOut 2.5s ease forwards;
+}
+@keyframes slideOut {
+  from {
+    top: 0;
+  }
+  to {
+    top: 100vh;
+  }
+}
+
+.lines {
+  display: contents;
+}
+
+.lines .line, .lines .median {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 100%;
+}
+
+.lines .median {
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('./assets/mediana.svg');
+  height: 200%;
+  background-size: contain;
+  background-repeat: repeat-y;
+  background-position-y: 0;
+  /*transition: background-position-y .3s linear;*/
+  animation: median-animation 20s infinite linear;
+}
+@keyframes median-animation {
+  from {
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 200%;
+  }
+}
+
+.lines .line {
+  background: #96A603;
+}
+
+.lines .line.right {
+  right: 16px;
+}
+
+.lines .line.left {
+  left: 16px;
+}
+
+.bike {
+  position: absolute;
+  bottom: 48px;
+  left: 60%;
+  width: 48px;
+  height: 96px;
+  background-color: dodgerblue;
+}
+
+/* BLOCKS */
+.blocks {
+  display: contents;
+}
+
+.block {
+  --x: 5;
+  --y: 30;
+  left: calc(1% * var(--x));
+  position: absolute;
+  background-color: #14071ced;
+  padding: 4px;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  max-width: 55%;
+  top: -30vh;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.block.active {
+  opacity: 1;
+  animation: obstacle ease;
+  animation-duration: calc(12s + (100 - var(--y)) / 100 * 2s);
+}
+
+.block img {
+  max-width: 40vw;
+  display: block;
+  border-radius: 12px;
+}
+
+.block.vibrate > * {
+  animation: vibrate 200ms infinite;
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(1px, -1px);
+  }
+
+  80% {
+    transform: translate(-1px, 1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes obstacle {
+  0% {
+    top: -30vh;
+  }
+
+  55% {
+    top: calc(1vh * var(--y, 30));
+  }
+
+  70% {
+    top: calc(1vh * var(--y, 30));
+  }
+
+  100% {
+    top: 110vh;
+  }
+}
