@@ -7,12 +7,30 @@ body, html {
   position: absolute;
   z-index: 1;
   aspect-ratio: 3 / 2;
-  width: 80vw;
+  width: 90vw;
   height: auto;
-  left: 10vw;
+  left: 5vw;
   top: -60%;
-  border: 1px solid salmon;
   transform: translateY(-50%);
+  display: grid;
+}
+
+#tickets img {
+  grid-area: 1 / -1;
+  width: 100%;
+  display: block;
+  transform: translateY(5px);
+}
+
+#tickets img.rotate {
+  transform: rotate(-6deg) translate(0px, -18px);
+  position: relative;
+  z-index: -1;
+}
+
+#tickets p {
+  text-align: center;
+  font-size: 22px;
 }
 
 #finish_line {
@@ -91,7 +109,14 @@ body, html {
   left: 60%;
   width: 48px;
   height: 96px;
-  background-color: dodgerblue;
+  background-color: blue;
+}
+
+.bike img {
+  height: 100%;
+  width: auto;
+  transform: translateX(-10%);
+  pointer-events: none;
 }
 
 /* BLOCKS */

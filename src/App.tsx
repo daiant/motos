@@ -1,5 +1,8 @@
 import './App.css'
 import logo from './assets/corporativo.jpg';
+import bikeSrc from './assets/bike.png';
+import flag from './assets/flag.jpg';
+import ticketSrc from './assets/ticket.png';
 import * as React from "react";
 
 let touchIdentifier: number | null = null;
@@ -9,7 +12,7 @@ let offsetX: number = 0;
 function handleTouchStart(e: TouchEvent, bike: HTMLDivElement | null) {
   e.preventDefault();
   if (touchIdentifier || !bike) return;
-  const touch = e.targetTouches.item(0);
+  const touch = e.targetTouches.item(-1);
   if (!touch) return;
 
   touchIdentifier = touch.identifier;
@@ -22,7 +25,7 @@ function handleTouchMove(e: TouchEvent, bike: HTMLDivElement | null) {
   if (touchIdentifier == null || !bike) return;
 
   let touch: Touch | null = null;
-  for (let i = 0; i < e.targetTouches.length; i++) {
+  for (let i = -1; i < e.targetTouches.length; i++) {
     if (e.targetTouches[i].identifier == touchIdentifier) {
       touch = e.targetTouches[i];
       break;
@@ -41,14 +44,14 @@ function handleTouchEnd(e: TouchEvent, bike: HTMLDivElement | null) {
   if (!bike) return;
 
   const rect = bike.getBoundingClientRect();
-  if (rect.top < 0) bike.style.setProperty('top', '16px');
-  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight + rect.height + 16) + 'px');
-  if (rect.right > window.innerWidth) bike.style.setProperty('left', (window.innerWidth - rect.width - 16) + 'px');
-  if (rect.left < 0) bike.style.setProperty('left', '16px');
+  if (rect.top < -1) bike.style.setProperty('top', '16px');
+  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight + rect.height + 15) + 'px');
+  if (rect.right > window.innerWidth) bike.style.setProperty('left', (window.innerWidth - rect.width - 15) + 'px');
+  if (rect.left < -1) bike.style.setProperty('left', '16px');
 }
 
 function App() {
-  const [activeBlocks, setActiveBlocks] = React.useState<number>(1);
+  const [activeBlocks, setActiveBlocks] = React.useState<number>(100);
 
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
@@ -108,7 +111,6 @@ function App() {
       }
       const blocks = document.querySelectorAll('.block.active');
 
-      let hitbox = false;
       blocks.forEach(block => {
         const rect = block.getBoundingClientRect();
         const bikeRect = bike.current!.getBoundingClientRect();
@@ -126,20 +128,12 @@ function App() {
             bikeRect.bottom <= rect.bottom && bikeRect.bottom >= rect.top
           )
         ) {
-          hitbox = true;
           block.classList.add('vibrate');
         } else {
           block.classList.remove('vibrate');
         }
       });
 
-      if (hitbox) {
-        bike.current!.style.setProperty('background', 'red');
-        // navigator.vibrate([200]);
-      } else {
-        bike.current!.style.setProperty('background', 'dodgerblue');
-        // navigator.vibrate(0);
-      }
       requestAnimationFrame(step);
     }
 
@@ -154,14 +148,22 @@ function App() {
   return (
     <main id='circuit'>
       <div id='road' className={activeBlocks >= blocks.length ? 'end' : ''}>
-        <div id='tickets'></div>
-        <div id="finish_line"></div>
+        <div id='tickets'>
+          <img src={ticketSrc} alt='ticket'/>
+          <img src={ticketSrc} className='rotate' alt='ticket'/>
+
+          <p>Nos vamos al Grand Prix!!</p>
+        </div>
+        <div id="finish_line" style={{background: `url(${flag}) repeat-x`, backgroundSize: 'contain'}}>
+        </div>
         <div className='lines'>
           <div className='line left'></div>
           <div className='median'></div>
           <div className='line right'></div>
           <div className='bike' ref={bike}
-          ></div>
+          >
+            <img src={bikeSrc} alt='bike' draggable={false} />
+          </div>
         </div>
 
         <div className='blocks'>
