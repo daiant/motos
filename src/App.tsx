@@ -34,7 +34,7 @@ function handleTouchMove(e: TouchEvent, bike: HTMLDivElement | null) {
 
   if (!touch) return;
 
-  bike.style.setProperty('top', Math.abs(touch.clientY - offsetY) + 'px');
+  bike.style.setProperty('top', Math.abs(touch.clientY + offsetY) + 'px');
   bike.style.setProperty('left', Math.abs(touch.clientX - offsetX) + 'px');
 }
 
@@ -45,10 +45,39 @@ function handleTouchEnd(e: TouchEvent, bike: HTMLDivElement | null) {
 
   const rect = bike.getBoundingClientRect();
   if (rect.top < -1) bike.style.setProperty('top', '16px');
-  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight + rect.height + 15) + 'px');
-  if (rect.right > window.innerWidth) bike.style.setProperty('left', (window.innerWidth - rect.width - 15) + 'px');
+  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight - rect.height - 16) + 'px');
+  if (rect.right > window.innerWidth) bike.style.setProperty('left', (window.innerWidth - rect.width - 16) + 'px');
   if (rect.left < -1) bike.style.setProperty('left', '16px');
 }
+
+const blocks = [
+  {
+    id: 1,
+    x: 6,
+    y: 45,
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  },
+  {
+    id: 1,
+    x: 50,
+    y: 15,
+    content: undefined,
+    src: logo,
+  },
+  {
+    id: 2,
+    x: 6,
+    y: 45,
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  },
+  {
+    id: 2,
+    x: 50,
+    y: 15,
+    content: undefined,
+    src: logo,
+  }
+];
 
 function App() {
   const [activeBlocks, setActiveBlocks] = React.useState<number>(1);
@@ -56,7 +85,7 @@ function App() {
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
      setActiveBlocks(prevState => prevState + 1);
-  }, []);
+  }, [activeBlocks, blocks.length]);
 
   React.useEffect(() => {
     const interval = window.setInterval(() => callback(), 12 * 1000);
@@ -66,34 +95,6 @@ function App() {
     }
   }, [callback]);
 
-  const blocks = [
-    {
-      id: 1,
-      x: 6,
-      y: 45,
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    },
-    {
-      id: 1,
-      x: 50,
-      y: 15,
-      content: undefined,
-      src: logo,
-    },
-    {
-      id: 2,
-      x: 6,
-      y: 45,
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    },
-    {
-      id: 2,
-      x: 50,
-      y: 15,
-      content: undefined,
-      src: logo,
-    }
-  ];
   const bike = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
