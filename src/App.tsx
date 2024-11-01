@@ -34,7 +34,7 @@ function handleTouchMove(e: TouchEvent, bike: HTMLDivElement | null) {
 
   if (!touch) return;
 
-  bike.style.setProperty('top', Math.abs(touch.screenY - offsetY) + 'px');
+  bike.style.setProperty('top', Math.abs(touch.screenY - offsetY * 1.5) + 'px');
   bike.style.setProperty('left', Math.abs(touch.screenX - offsetX) + 'px');
 }
 
