@@ -16,7 +16,7 @@ function handleTouchStart(e: TouchEvent, bike: HTMLDivElement | null) {
   if (!touch) return;
 
   touchIdentifier = touch.identifier;
-  offsetY = (touch.clientY - bike.getBoundingClientRect().top);
+  offsetY = (touch.screenY - bike.getBoundingClientRect().top);
   offsetX = (touch.screenX - bike.getBoundingClientRect().left);
 }
 
