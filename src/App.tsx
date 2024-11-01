@@ -51,7 +51,7 @@ function handleTouchEnd(e: TouchEvent, bike: HTMLDivElement | null) {
 }
 
 function App() {
-  const [activeBlocks, setActiveBlocks] = React.useState<number>(100);
+  const [activeBlocks, setActiveBlocks] = React.useState<number>(1);
 
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
