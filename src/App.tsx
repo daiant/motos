@@ -6,7 +6,7 @@ import ticketSrc from './assets/ticket.png';
 import * as React from "react";
 
 let touchIdentifier: number | null = null;
-// let offsetY: number = 0;
+let offsetY: number = 0;
 let offsetX: number = 0;
 
 function handleTouchStart(e: TouchEvent, bike: HTMLDivElement | null) {
@@ -16,7 +16,7 @@ function handleTouchStart(e: TouchEvent, bike: HTMLDivElement | null) {
   if (!touch) return;
 
   touchIdentifier = touch.identifier;
-  // offsetY = (touch.screenY - bike.getBoundingClientRect().top);
+  offsetY = (touch.screenY - bike.getBoundingClientRect().top);
   offsetX = (touch.screenX - bike.getBoundingClientRect().left);
 }
 
@@ -34,7 +34,7 @@ function handleTouchMove(e: TouchEvent, bike: HTMLDivElement | null) {
 
   if (!touch) return;
 
-  bike.style.setProperty('top', Math.abs(touch.screenY) + 'px');
+  bike.style.setProperty('top', Math.abs(touch.screenY - offsetY) + 'px');
   bike.style.setProperty('left', Math.abs(touch.screenX - offsetX) + 'px');
 }
 
