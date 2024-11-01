@@ -42,7 +42,7 @@ function handleTouchEnd(e: TouchEvent, bike: HTMLDivElement | null) {
 
   const rect = bike.getBoundingClientRect();
   if (rect.top < 0) bike.style.setProperty('top', '16px');
-  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight - rect.height + 16) + 'px');
+  if (rect.bottom > window.innerHeight) bike.style.setProperty('top', (window.innerHeight + rect.height + 16) + 'px');
   if (rect.right > window.innerWidth) bike.style.setProperty('left', (window.innerWidth - rect.width - 16) + 'px');
   if (rect.left < 0) bike.style.setProperty('left', '16px');
 }
