@@ -12,7 +12,7 @@ let offsetX: number = 0;
 function handleTouchStart(e: TouchEvent, bike: HTMLDivElement | null) {
   e.preventDefault();
   if (touchIdentifier || !bike) return;
-  const touch = e.targetTouches.item(-1);
+  const touch = e.targetTouches.item(0);
   if (!touch) return;
 
   touchIdentifier = touch.identifier;
@@ -25,7 +25,7 @@ function handleTouchMove(e: TouchEvent, bike: HTMLDivElement | null) {
   if (touchIdentifier == null || !bike) return;
 
   let touch: Touch | null = null;
-  for (let i = -1; i < e.targetTouches.length; i++) {
+  for (let i = 0; i < e.targetTouches.length; i++) {
     if (e.targetTouches[i].identifier == touchIdentifier) {
       touch = e.targetTouches[i];
       break;
@@ -55,7 +55,7 @@ function App() {
 
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
-    setActiveBlocks(prevState => prevState + 1);
+    // setActiveBlocks(prevState => prevState + 1);
   }, []);
 
   React.useEffect(() => {
