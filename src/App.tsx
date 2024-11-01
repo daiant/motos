@@ -55,7 +55,7 @@ function App() {
 
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
-    // setActiveBlocks(prevState => prevState + 1);
+     setActiveBlocks(prevState => prevState + 1);
   }, []);
 
   React.useEffect(() => {
