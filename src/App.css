@@ -51,6 +51,7 @@ body, html {
 
 #road.end {
   animation: slideOut 2.5s ease forwards;
+  animation-delay: 1.3s;
 }
 @keyframes slideOut {
   from {
@@ -106,10 +107,11 @@ body, html {
 
 .bike {
   position: absolute;
-  bottom: 48px;
+  bottom: 64px;
   left: 60%;
   width: 48px;
   height: 96px;
+  transform: translateY(-50%);
 }
 
 .bike img {
@@ -127,7 +129,8 @@ body, html {
 .block {
   --x: 5;
   --y: 30;
-  left: calc(1% * var(--x));
+  --duration: 12;
+  left: calc(1vw * var(--x));
   position: absolute;
   background-color: #14071ced;
   padding: 4px;
@@ -135,7 +138,7 @@ body, html {
   color: white;
   font-size: 16px;
   max-width: 55%;
-  top: -30vh;
+  top: -60vh;
   pointer-events: none;
   opacity: 0;
 }
@@ -143,11 +146,14 @@ body, html {
 .block.active {
   opacity: 1;
   animation: obstacle ease;
-  animation-duration: calc(12s + (100 - var(--y)) / 100 * 2s);
+  animation-duration: calc(var(--duration) * 1s + (100 - var(--y)) / 100 * 2s);
 }
-
+.block img.lg {
+  max-width: 70vw;
+}
 .block img {
   max-width: 40vw;
+  width: 100%;
   display: block;
   border-radius: 12px;
 }
@@ -176,7 +182,7 @@ body, html {
 
 @keyframes obstacle {
   0% {
-    top: -30vh;
+    top: -60vh;
   }
 
   55% {

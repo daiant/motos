@@ -1,5 +1,10 @@
 import './App.css'
-import logo from './assets/corporativo.jpg';
+import motillo from './assets/motillo.jpg';
+import jedula from './assets/jedula.jpg';
+import como_llegar from './assets/map.jpg';
+import pilotos from './assets/pilotos.jpg';
+import circuito from './assets/circuito_colores.jpg';
+import calendar from './assets/calendario.jpg';
 import bikeSrc from './assets/bike.png';
 import flag from './assets/flag.jpg';
 import ticketSrc from './assets/ticket.png';
@@ -50,33 +55,90 @@ function handleTouchEnd(e: TouchEvent, bike: HTMLDivElement | null) {
   if (rect.left < -1) bike.style.setProperty('left', '16px');
 }
 
+const blockSize = 6;
 const blocks = [
   {
     id: 1,
     x: 6,
     y: 45,
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    content: '¿Te suena este pueblo?'
   },
   {
     id: 1,
     x: 50,
     y: 15,
-    content: undefined,
-    src: logo,
+    src: jedula,
   },
   {
     id: 2,
-    x: 6,
-    y: 45,
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-  },
-  {
-    id: 2,
-    x: 50,
+    x: 15,
     y: 15,
-    content: undefined,
-    src: logo,
-  }
+    // Motillo
+    src: motillo,
+    size: 'lg',
+  },
+  {
+    id: 3,
+    x: 30,
+    y: 45,
+    // Calendario
+    size: 'lg',
+    src: calendar,
+  },
+  {
+    id: 3,
+    x: 10,
+    y: 15,
+    content: '¡Ya han salido las fechas!',
+  },
+  {
+    id: 4,
+    x: 20,
+    y: 55,
+    content: '¿Quieres más pistas?',
+  },
+  {
+    id: 4,
+    x: 40,
+    y: 15,
+    content: 'No nos vamos a Australia, tampoco a Japón...',
+  },
+  {
+    id: 5,
+    x: 10,
+    y: 75,
+    size: 'lg',
+    // Pilotos
+    src: pilotos
+  },
+  {
+    id: 5,
+    x: 35,
+    y: 30,
+    size: 'lg',
+    // Circuito
+    src: circuito
+  },
+  {
+    id: 6,
+    x: 30,
+    y: 35,
+    // Como llegar
+    src: como_llegar,
+    size: 'lg'
+  },
+  {
+    id: 6,
+    x: 20,
+    y: 65,
+    content: '¡Tenemos alojamiento!'
+  },
+  {
+    id: 6,
+    x: 40,
+    y: 15,
+    content: 'Y entradas virtuales...'
+  },
 ];
 
 function App() {
@@ -88,12 +150,14 @@ function App() {
   }, [activeBlocks]);
 
   React.useEffect(() => {
+    if(activeBlocks > blockSize) return;
+
     const interval = window.setInterval(() => callback(), 12 * 1000);
 
     return () => {
       window.clearTimeout(interval);
     }
-  }, [callback]);
+  }, [callback, activeBlocks]);
 
   const bike = React.useRef<HTMLDivElement>(null);
 
@@ -148,12 +212,11 @@ function App() {
 
   return (
     <main id='circuit'>
-      <div id='road' className={activeBlocks >= blocks.length ? 'end' : ''}>
+      <div id='road' className={activeBlocks > blockSize ? 'end' : ''}>
         <div id='tickets'>
           <img src={ticketSrc} alt='ticket'/>
           <img src={ticketSrc} className='rotate' alt='ticket'/>
-
-          <p>Nos vamos al Grand Prix!!</p>
+          <p>¡¡Nos vamos a Jerez!!</p>
         </div>
         <div id="finish_line" style={{background: `url(${flag}) repeat-x`, backgroundSize: 'contain'}}>
         </div>
@@ -161,8 +224,7 @@ function App() {
           <div className='line left'></div>
           <div className='median'></div>
           <div className='line right'></div>
-          <div className='bike' ref={bike}
-          >
+          <div className='bike' ref={bike}>
             <img src={bikeSrc} alt='bike' draggable={false} />
           </div>
         </div>
@@ -170,12 +232,12 @@ function App() {
         <div className='blocks'>
           {blocks.map((block) => (
             <div
-              key={block.id + block.x + block.y}
+              key={'' + block.id + block.x + block.y}
               className={`block ${block.id === activeBlocks ? 'active' : ''}`}
               style={{'--x': block.x, '--y': block.y} as React.CSSProperties}
             >
               {block.content && <p>{block.content}</p>}
-              {block.src && <img src={logo} alt=''/>}
+              {block.src && <img src={block.src} alt='' className={block.size ?? ''}/>}
             </div>
           ))}
         </div>
