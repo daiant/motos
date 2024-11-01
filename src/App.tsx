@@ -85,7 +85,7 @@ function App() {
   const callback = React.useCallback(() => {
     if(activeBlocks >= blocks.length) return;
      setActiveBlocks(prevState => prevState + 1);
-  }, [activeBlocks, blocks.length]);
+  }, [activeBlocks]);
 
   React.useEffect(() => {
     const interval = window.setInterval(() => callback(), 12 * 1000);
