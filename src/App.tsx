@@ -154,6 +154,7 @@ function App() {
   return (
     <main id='circuit'>
       <div id='road' className={activeBlocks >= blocks.length ? 'end' : ''}>
+        <div id='tickets'></div>
         <div id="finish_line"></div>
         <div className='lines'>
           <div className='line left'></div>

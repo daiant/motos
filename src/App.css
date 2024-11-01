@@ -3,12 +3,24 @@ body, html {
   background: linear-gradient(#170031, #280039);
 }
 
+#tickets {
+  position: absolute;
+  z-index: 1;
+  aspect-ratio: 3 / 2;
+  width: 80vw;
+  height: auto;
+  left: 10vw;
+  top: -60%;
+  border: 1px solid salmon;
+  transform: translateY(-50%);
+}
+
 #finish_line {
-  position: fixed;
+  position: absolute;
   width: 100vw;
   height: 96px;
   background-color: grey;
-  top: -100%;
+  top: -96px;
   z-index: 1;
 }
 
