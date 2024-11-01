@@ -20,7 +20,7 @@ body, html {
   width: 100vw;
   height: 96px;
   background-color: grey;
-  top: -96px;
+  bottom: 100%;
   z-index: 1;
 }
 
